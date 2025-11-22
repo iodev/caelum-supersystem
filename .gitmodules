@@ -1,0 +1,27 @@
+[submodule "PassiveIncomeMaximizer"]
+	path = PassiveIncomeMaximizer
+	url = https://github.com/iodev/Passive-Income-Maximizer.git
+[submodule "finvec"]
+	path = finvec
+	url = https://github.com/iodev/finvec.git
+[submodule "caelum"]
+	path = caelum
+	url = https://github.com/iodev/caelum.git
+[submodule "caelum-unified"]
+	path = caelum-unified
+	url = https://github.com/iodev/caelum-unified.git
+[submodule "fincoll"]
+	path = fincoll
+	url = https://github.com/iodev/fincoll.git
+[submodule "senvec"]
+	path = senvec
+	url = https://github.com/iodev/senvec.git
+[submodule "concept-graph"]
+	path = concept-graph
+	url = https://github.com/iodev/concept-graph.git
+[submodule "democratic-congress"]
+	path = democratic-congress
+	url = https://github.com/iodev/democratic-congress.git
+[submodule "opencode"]
+	path = opencode
+	url = https://github.com/iodev/opencode.git
