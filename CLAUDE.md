@@ -72,6 +72,52 @@ Each subdirectory has its own `CLAUDE.md` with specific instructions. **READ THE
 **Location**: `/home/rford/caelum/ss/caelum-unified/` (may not exist yet)
 **When to read**: Working on shared infrastructure (PostgreSQL, Redis, Qdrant)
 
+### 7. Concept-Graph (Knowledge Graphs)
+**Location**: `/home/rford/caelum/ss/concept-graph/CLAUDE.md`
+**When to read**: Working on knowledge graph construction, reasoning, semantic relationships
+**Key topics**:
+- Graph-based knowledge representation
+- NetworkX/Neo4j integration
+- Semantic reasoning and inference
+
+### 8. Democratic Congress (Multi-LLM Framework)
+**Location**: `/home/rford/caelum/ss/democratic-congress/CLAUDE.md`
+**When to read**: Working on multi-LLM voting, consensus building, heterogeneous AI systems
+**Key topics**:
+- Heterogeneous multi-LLM coordination
+- Democratic decision-making patterns
+- Cost optimization via mixed LLM tiers
+- Transparent deliberation and voting
+
+---
+
+## 📁 Root-Level Documentation Structure
+
+### Active Operational Docs (Root)
+- **README.md** - Main repository overview and quick start
+- **CLAUDE.md** - This file - Claude Code session instructions
+- **LOCAL_REPOS.md** - Local-only repository tracking
+- **ECOSYSTEM_ARCHITECTURE.md** - Core system architecture
+- **DEPLOYMENT_STRATEGY.md** - Deployment and operations guide
+- **FINCOLL_RESTART_INSTRUCTIONS.md** - FinColl service restart runbook
+- **TESTING_CHECKLIST.md** - Active testing guide
+- **SUDO_ACCESS_NOTE.md** - Security and access reference
+
+### Historical Documentation (docs/archive/)
+Session summaries and historical status reports:
+- Session summaries (Oct-Nov 2025)
+- Old planning documents
+- Completed project reports
+- Historical analysis docs
+
+### Technical Reference (docs/reference/)
+Valuable but not immediately needed:
+- **SWARM_INTELLIGENCE_ARCHITECTURE.md** (81K) - Major architectural design
+- **FINVEC_PIM_INTEGRATION_ANALYSIS.md** - Integration design patterns
+- **GPU_TRAINING_STRATEGY_V4.md** - Training strategy reference
+- **PHASE4_SELF_EVOLUTION.md** - Self-evolution architecture
+- Setup and configuration guides
+
 ---
 
 ## 🎯 Quick Start Decision Tree
@@ -315,19 +361,26 @@ curl http://localhost:18000/health
 
 **Remember**: This is a multi-repository ecosystem. Each repo has specific instructions in its own CLAUDE.md. Read them in order of task relevance!
 
-**Updated**: 2025-11-14 - PassiveIncomeMaximizer documentation consolidation complete
-- using postgres credential of "pim_user" on docker container "pim-postgres" at host 10.32.3.27 port 15433
-- using TRADESTATION API (Alpaca api and YFinance api are only if there is something not available on Tradestation)
+---
 
-## 🗳️ Democratic Agent Congress Architecture
+## 📚 All CLAUDE.md Files Quick Reference
 
-### 7. Democratic Congress (New - Planned)
-**Location**: `/home/rford/caelum/ss/democratic-congress/` (to be created)
-**Purpose**: Heterogeneous multi-LLM democratic decision-making framework
+**Root**: [`/home/rford/caelum/ss/CLAUDE.md`](./CLAUDE.md) (this file)
 
-**When to use**:
-- Need diverse perspectives from multiple LLM providers
-- Require transparent deliberation and voting
-- Want cost optimization (mix expensive + local LLMs)
-- Building consensus-based decision systems
-- we have zero desire or need for fake/non-real data in this endeavor since we aim to characterize and learn from these characterizations of real data behaviors
+**Submodules**:
+- [`PassiveIncomeMaximizer/CLAUDE.md`](./PassiveIncomeMaximizer/CLAUDE.md) - Trading system, 9-agent swarm
+- [`finvec/CLAUDE.md`](./finvec/CLAUDE.md) - ML models, V6/V7, training, branch management
+- [`caelum/CLAUDE.md`](./caelum/CLAUDE.md) - MCP servers, self-evolution, orchestration
+- [`concept-graph/CLAUDE.md`](./concept-graph/CLAUDE.md) - Knowledge graphs, semantic reasoning
+- [`democratic-congress/CLAUDE.md`](./democratic-congress/CLAUDE.md) - Multi-LLM voting, consensus
+
+**Note**: fincoll, senvec, and caelum-unified may have CLAUDE.md files - check if needed.
+
+---
+
+**Updated**: 2025-11-22 - Root documentation cleanup complete (37 → 8 files)
+- Added docs/archive/ for historical sessions
+- Added docs/reference/ for technical reference docs
+- Updated CLAUDE.md with all subfolder links
+- Using postgres credential "pim_user" on docker container "pim-postgres" at host 10.32.3.27 port 15433
+- Using TRADESTATION API (Alpaca api and YFinance api are only if not available on Tradestation)

@@ -1,0 +1,539 @@
+# Caelum AI Trading Ecosystem - Unified Docker Compose
+#
+# This compose file orchestrates ALL services in the Caelum ecosystem:
+# - PIM (PassiveIncomeMaximizer): Control plane + UI
+# - FinColl: ML inference API
+# - SenVec: Sentiment features (5 microservices)
+# - FinVec: Training jobs (on-demand)
+#
+# PROFILES:
+# - dev: Development (all services, code hot-reload)
+# - production: Production (optimized, auto-restart)
+# - testing: Multi-version testing
+#
+# USAGE:
+#   Development:    docker-compose -f docker-compose.ecosystem.yml --profile dev up
+#   Production:     docker-compose -f docker-compose.ecosystem.yml --profile production up -d
+#   Testing:        docker-compose -f docker-compose.ecosystem.yml --profile testing up -d
+#
+# MULTI-HOST DEPLOYMENT:
+#   Set DOCKER_HOST environment variable to deploy to specific servers:
+#     DOCKER_HOST=ssh://10.32.3.44 docker-compose up fincoll-production
+#
+# VERSION MANAGEMENT:
+#   Override versions via environment variables:
+#     PIM_VERSION=v2.0.0 FINCOLL_VERSION=v1.1.0 docker-compose up
+
+# ============================================================================
+# NETWORKS
+# ============================================================================
+networks:
+  caelum-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+
+# ============================================================================
+# SHARED VOLUMES
+# ============================================================================
+volumes:
+  # Shared credentials (NFS-mounted in production)
+  credentials:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/rford/caelum/ss
+
+  # Model checkpoints (shared between FinVec and FinColl)
+  model-checkpoints:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/rford/caelum/ss/finvec/checkpoints
+
+  # PostgreSQL data
+  postgres-data:
+
+  # Redis data
+  redis-data:
+
+# ============================================================================
+# INFRASTRUCTURE SERVICES
+# ============================================================================
+services:
+  # PostgreSQL Database (shared by all services)
+  postgres:
+    image: postgres:15-alpine
+    container_name: caelum-postgres
+    environment:
+      POSTGRES_DB: caelum
+      POSTGRES_USER: caelum
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-caelum-secure-2025}
+      POSTGRES_MULTIPLE_DATABASES: pim_database,fincoll_db,senvec_db
+    ports:
+      - "${POSTGRES_PORT:-15432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./scripts/init-multiple-databases.sh:/docker-entrypoint-initdb.d/init-multiple-databases.sh
+    restart: unless-stopped
+    networks:
+      caelum-network:
+        ipv4_address: 172.25.0.10
+    profiles:
+      - dev
+      - production
+      - testing
+
+  # Redis Cache (shared by SenVec and FinColl)
+  redis:
+    image: redis:7-alpine
+    container_name: caelum-redis
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    ports:
+      - "${REDIS_PORT:-16379}:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      caelum-network:
+        ipv4_address: 172.25.0.11
+    profiles:
+      - dev
+      - production
+      - testing
+
+# ============================================================================
+# SENVEC MICROSERVICES (Sentiment Features)
+# ============================================================================
+
+  # SenVec: SentimentTrader (23D market sentiment)
+  senvec-sentimentrader:
+    build:
+      context: ./senvec
+      dockerfile: Dockerfile.sentimentrader
+    image: senvec-sentimentrader:${SENVEC_ST_VERSION:-latest}
+    container_name: senvec-sentimentrader
+    ports:
+      - "18001:18001"
+    environment:
+      - SERVICE_PORT=18001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CREDENTIALS_DIR=/credentials
+    volumes:
+      - credentials:/credentials:ro
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - caelum-network
+    profiles:
+      - dev
+      - production
+
+  # SenVec: Alpha Vantage (18D cross-asset)
+  senvec-alphavantage:
+    build:
+      context: ./senvec
+      dockerfile: Dockerfile.alphavantage
+    image: senvec-alphavantage:${SENVEC_AV_VERSION:-latest}
+    container_name: senvec-alphavantage
+    ports:
+      - "18002:18002"
+    environment:
+      - SERVICE_PORT=18002
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CREDENTIALS_DIR=/credentials
+    volumes:
+      - credentials:/credentials:ro
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - caelum-network
+    profiles:
+      - dev
+      - production
+
+  # SenVec: Social Sentiment (23D social media)
+  senvec-social:
+    build:
+      context: ./senvec
+      dockerfile: Dockerfile.social
+    image: senvec-social:${SENVEC_SOCIAL_VERSION:-latest}
+    container_name: senvec-social
+    ports:
+      - "18003:18003"
+    environment:
+      - SERVICE_PORT=18003
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CREDENTIALS_DIR=/credentials
+    volumes:
+      - credentials:/credentials:ro
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - caelum-network
+    profiles:
+      - dev
+      - production
+
+  # SenVec: News Sentiment (8D news)
+  senvec-news:
+    build:
+      context: ./senvec
+      dockerfile: Dockerfile.news
+    image: senvec-news:${SENVEC_NEWS_VERSION:-latest}
+    container_name: senvec-news
+    ports:
+      - "18004:18004"
+    environment:
+      - SERVICE_PORT=18004
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CREDENTIALS_DIR=/credentials
+    volumes:
+      - credentials:/credentials:ro
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - caelum-network
+    profiles:
+      - dev
+      - production
+
+  # SenVec: Aggregator (72D combined)
+  senvec-aggregator:
+    build:
+      context: ./senvec
+      dockerfile: Dockerfile.aggregator
+    image: senvec-aggregator:${SENVEC_AGG_VERSION:-latest}
+    container_name: senvec-aggregator
+    ports:
+      - "18000:18000"
+    environment:
+      - SERVICE_PORT=18000
+      - SENTIMENTRADER_URL=http://senvec-sentimentrader:18001
+      - ALPHAVANTAGE_URL=http://senvec-alphavantage:18002
+      - SOCIAL_URL=http://senvec-social:18003
+      - NEWS_URL=http://senvec-news:18004
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - senvec-sentimentrader
+      - senvec-alphavantage
+      - senvec-social
+      - senvec-news
+      - redis
+    restart: unless-stopped
+    networks:
+      - caelum-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    profiles:
+      - dev
+      - production
+
+# ============================================================================
+# FINCOLL (ML Inference API)
+# ============================================================================
+
+  # FinColl: Development
+  fincoll-dev:
+    build:
+      context: ./fincoll
+      dockerfile: Dockerfile
+    image: fincoll:${FINCOLL_VERSION:-latest}
+    container_name: fincoll-dev
+    restart: "no"
+    ports:
+      - "8001:8001"
+    environment:
+      - FINCOLL_HOST=0.0.0.0
+      - FINCOLL_PORT=8001
+      - FINCOLL_DEBUG=true
+      - FINCOLL_LOG_LEVEL=DEBUG
+      - CREDENTIALS_DIR=/credentials
+      - SENVEC_API_URL=http://senvec-aggregator:18000
+      - MODEL_CHECKPOINT_DIR=/models
+    volumes:
+      - credentials:/credentials:ro
+      - model-checkpoints:/models:ro
+      - ./fincoll/fincoll:/app/fincoll:ro  # Hot reload
+    depends_on:
+      - senvec-aggregator
+    networks:
+      - caelum-network
+    profiles:
+      - dev
+
+  # FinColl: Production
+  fincoll-production:
+    build:
+      context: ./fincoll
+      dockerfile: Dockerfile
+    image: fincoll:${FINCOLL_VERSION:-latest}
+    container_name: fincoll-production
+    restart: always
+    ports:
+      - "${FINCOLL_PORT:-8001}:8001"
+    environment:
+      - FINCOLL_HOST=0.0.0.0
+      - FINCOLL_PORT=8001
+      - FINCOLL_DEBUG=false
+      - FINCOLL_LOG_LEVEL=${FINCOLL_LOG_LEVEL:-INFO}
+      - CREDENTIALS_DIR=/credentials
+      - SENVEC_API_URL=http://senvec-aggregator:18000
+      - MODEL_CHECKPOINT_DIR=/models
+    volumes:
+      - credentials:/credentials:ro
+      - model-checkpoints:/models:ro
+    depends_on:
+      - senvec-aggregator
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          memory: 512M
+    networks:
+      - caelum-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    profiles:
+      - production
+
+  # FinColl: Testing (v2 on different port)
+  fincoll-test:
+    build:
+      context: ./fincoll
+      dockerfile: Dockerfile
+    image: fincoll:${FINCOLL_TEST_VERSION:-v2.0.0-beta}
+    container_name: fincoll-test
+    restart: "no"
+    ports:
+      - "8002:8001"
+    environment:
+      - FINCOLL_HOST=0.0.0.0
+      - FINCOLL_PORT=8001
+      - FINCOLL_DEBUG=true
+      - FINCOLL_LOG_LEVEL=DEBUG
+      - CREDENTIALS_DIR=/credentials
+      - SENVEC_API_URL=http://senvec-aggregator:18000
+      - MODEL_CHECKPOINT_DIR=/models
+    volumes:
+      - credentials:/credentials:ro
+      - model-checkpoints:/models:ro
+    depends_on:
+      - senvec-aggregator
+    networks:
+      - caelum-network
+    profiles:
+      - testing
+
+# ============================================================================
+# PIM (PassiveIncomeMaximizer - Control Plane)
+# ============================================================================
+
+  # PIM: Development
+  pim-dev:
+    build:
+      context: ./PassiveIncomeMaximizer
+      dockerfile: Dockerfile.dev
+    image: pim:${PIM_VERSION:-latest}
+    container_name: pim-dev
+    restart: "no"
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - DATABASE_URL=postgresql://caelum:${POSTGRES_PASSWORD:-caelum-secure-2025}@postgres:5432/pim_database
+      - FINCOLL_URL=http://fincoll-dev:8001
+      - SENVEC_URL=http://senvec-aggregator:18000
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./PassiveIncomeMaximizer:/app:ro  # Hot reload
+      - /app/node_modules  # Don't overwrite node_modules
+    depends_on:
+      - postgres
+      - fincoll-dev
+      - senvec-aggregator
+    networks:
+      - caelum-network
+    profiles:
+      - dev
+
+  # PIM: Production
+  pim-production:
+    build:
+      context: ./PassiveIncomeMaximizer
+      dockerfile: Dockerfile
+    image: pim:${PIM_VERSION:-latest}
+    container_name: pim-production
+    restart: always
+    ports:
+      - "${PIM_PORT:-5000}:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - DATABASE_URL=postgresql://caelum:${POSTGRES_PASSWORD:-caelum-secure-2025}@postgres:5432/pim_database
+      - FINCOLL_URL=http://fincoll-production:8001
+      - SENVEC_URL=http://senvec-aggregator:18000
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - fincoll-production
+      - senvec-aggregator
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          memory: 256M
+    networks:
+      - caelum-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    profiles:
+      - production
+
+# ============================================================================
+# FINVEC (Training Jobs - On-Demand)
+# ============================================================================
+
+  # FinVec: Training Job (LLM-1)
+  finvec-train-llm1:
+    build:
+      context: ./finvec
+      dockerfile: Dockerfile.train
+    image: finvec:${FINVEC_VERSION:-latest}
+    container_name: finvec-train-llm1
+    runtime: nvidia  # Requires nvidia-docker
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - MODEL_NAME=llm1-tech
+      - SYMBOLS=tech
+      - EPOCHS=${FINVEC_EPOCHS:-100}
+      - BATCH_SIZE=16
+      - CHECKPOINT_DIR=/checkpoints
+      - CREDENTIALS_DIR=/credentials
+    volumes:
+      - credentials:/credentials:ro
+      - model-checkpoints:/checkpoints
+      - ./finvec:/app:ro
+    networks:
+      - caelum-network
+    profiles:
+      - training
+
+  # FinVec: Training Job (LLM-3)
+  finvec-train-llm3:
+    build:
+      context: ./finvec
+      dockerfile: Dockerfile.train
+    image: finvec:${FINVEC_VERSION:-latest}
+    container_name: finvec-train-llm3
+    runtime: nvidia
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - MODEL_NAME=llm3-yieldmax
+      - SYMBOLS=yieldmax
+      - EPOCHS=${FINVEC_EPOCHS:-100}
+      - BATCH_SIZE=12
+      - CHECKPOINT_DIR=/checkpoints
+      - CREDENTIALS_DIR=/credentials
+    volumes:
+      - credentials:/credentials:ro
+      - model-checkpoints:/checkpoints
+      - ./finvec:/app:ro
+    networks:
+      - caelum-network
+    profiles:
+      - training
+
+# ============================================================================
+# MONITORING (Optional)
+# ============================================================================
+
+  # Prometheus (metrics collection)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: caelum-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    restart: unless-stopped
+    networks:
+      - caelum-network
+    profiles:
+      - monitoring
+
+  # Grafana (dashboards)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: caelum-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - ./monitoring/grafana:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - caelum-network
+    profiles:
+      - monitoring
+
+# ============================================================================
+# HEALTH CHECK SERVICE (for PIM orchestration)
+# ============================================================================
+
+  # Health aggregator (exposes /health for all services)
+  health-aggregator:
+    image: alpine:latest
+    container_name: caelum-health
+    command: |
+      sh -c '
+        apk add --no-cache curl jq
+        while true; do
+          echo "=== Caelum Ecosystem Health ==="
+          echo "PIM: $(curl -s http://pim-production:5000/api/health | jq -r .status)"
+          echo "FinColl: $(curl -s http://fincoll-production:8001/health | jq -r .status)"
+          echo "SenVec: $(curl -s http://senvec-aggregator:18000/health | jq -r .status)"
+          sleep 60
+        done
+      '
+    depends_on:
+      - pim-production
+      - fincoll-production
+      - senvec-aggregator
+    networks:
+      - caelum-network
+    profiles:
+      - production
+      - monitoring
