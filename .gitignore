@@ -15,3 +15,18 @@ Thumbs.db
 # Temporary files
 *.tmp
 .cache/
+
+# Environment and credentials
+**/.env
+**/.env.*
+.tradestation_token.json
+.alpha_vantage_credentials.json
+.sentimentradar_credentials.json
+.sentimentrader_credentials.json
+.finage.json
+.finlight.me.json
+
+# Config files with secrets
+**/finvec-config.json
+**/training-config.json
+**/backtest-configs/*.json
