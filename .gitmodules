@@ -4,9 +4,6 @@
 [submodule "finvec"]
 	path = finvec
 	url = https://github.com/iodev/finvec.git
-[submodule "caelum"]
-	path = caelum
-	url = https://github.com/iodev/caelum.git
 [submodule "caelum-unified"]
 	path = caelum-unified
 	url = https://github.com/iodev/caelum-unified.git

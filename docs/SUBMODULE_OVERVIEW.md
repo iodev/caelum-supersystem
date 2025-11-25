@@ -25,31 +25,31 @@ The goal: **Maximize passive income through intelligent, self-improving AI syste
 │                    CAELUM SUPERSYSTEM                                │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                      │
+│  ┌──────────────────────────────────────────────────────────┐       │
+│  │              PassiveIncomeMaximizer (PRIMARY)             │       │
+│  │  9 LLM Agents → Committee Voting → Trade Execution        │       │
+│  │  Layer 1 + Layer 2 RL + Meta-Learning CONNECTED           │       │
+│  │  Ports: 5000, 5500, 5002                                  │       │
+│  └──────────────────────────┬───────────────────────────────┘       │
+│                             │                                        │
+│              ┌──────────────┴──────────────┐                        │
+│              ▼                              ▼                        │
 │  ┌──────────────────────┐    ┌──────────────────────┐               │
-│  │ PassiveIncomeMaximizer│    │       finvec         │               │
-│  │  (Trading System)     │◄───│  (ML Predictions)    │               │
-│  │  9 LLM Agents         │    │  V6/V7 Features      │               │
-│  │  Committee Voting     │    │  Cluster Learning    │               │
-│  │  Ports: 5000,5500,5002│    │  Ports: 8002,18000   │               │
-│  └──────────┬───────────┘    └──────────────────────┘               │
-│             │                                                        │
-│             │ orchestration                                          │
-│             ▼                                                        │
-│  ┌──────────────────────┐    ┌──────────────────────┐               │
-│  │       caelum         │    │   caelum-unified     │               │
-│  │  (MCP Servers)       │    │  (Infrastructure)    │               │
-│  │  Self-Evolution      │    │  PostgreSQL, Redis   │               │
-│  │  Multi-Device        │    │  Qdrant Vectors      │               │
-│  │  Notifications       │    │  Port: 15432,6379    │               │
+│  │       finvec         │    │   caelum-unified     │               │
+│  │  (ML Predictions)    │    │  (Infrastructure)    │               │
+│  │  V6/V7 Features      │    │  PostgreSQL, Redis   │               │
+│  │  Cluster Learning    │    │  Qdrant Vectors      │               │
+│  │  Ports: 8002,18000   │    │  Port: 15432,6379    │               │
 │  └──────────────────────┘    └──────────────────────┘               │
 │                                                                      │
 │  ┌──────────────────────┐    ┌──────────────────────┐               │
 │  │    concept-graph     │    │ democratic-congress  │               │
 │  │  (Knowledge Graphs)  │    │  (Multi-LLM Voting)  │               │
 │  │  Reconstructive Mem  │    │  Heterogeneous AI    │               │
-│  │  Semantic Compress   │    │  Consensus Building  │               │
 │  │  Research Project    │    │  Port: 3000,5173     │               │
 │  └──────────────────────┘    └──────────────────────┘               │
+│                                                                      │
+│  External: caelum MCP (github.com/iodev/caelum) - orchestration     │
 │                                                                      │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -151,40 +151,17 @@ Predictions + Confidence Scores
 
 ---
 
-## 3. Caelum (MCP Servers)
+## 3. Caelum MCP (External)
+
+**Note**: Caelum MCP servers are managed separately at github.com/iodev/caelum
 
 **Purpose**: Model Context Protocol servers for multi-device orchestration, self-evolution, and automation.
 
-**Vision**: A self-evolving AI assistant system that improves its own workflows, coordinates across devices, and provides intelligent automation.
-
-### Architecture
-
-```
-┌─────────────────────────────────────────┐
-│          MCP Server Ecosystem           │
-├─────────────────────────────────────────┤
-│  device-orchestration-server (2.0.3)    │
-│  analytics-metrics-server (1.0.1)       │
-│  opportunity-discovery-server (0.1.1)   │
-│  caelum-tier0-llm (1.0.0)              │
-└─────────────────────────────────────────┘
-```
-
-### Key Features
-- **Self-Evolution Workflows**: System proposes and implements improvements
-- **Multi-Device Orchestration**: Coordinate across workstations, servers, mobile
-- **Tier-0 Self-Evolving LLM**: Purpose-built model for MCP operations
-- **Cross-Device Notifications**: Unified alerting system
-- **Published npm Packages**: @iodev/* namespace on GitHub registry
-
-### Self-Evolution Process
-1. Analyze workflow for optimization opportunities
-2. Use `auto_evolve_workflow` with confidence scores
-3. Apply high-confidence (>0.9) changes automatically
-4. Create branches for medium-confidence (0.7-0.9) changes
-5. Learn from all evolution attempts
-
-**CLAUDE.md**: [caelum/CLAUDE.md](../caelum/CLAUDE.md)
+**Published npm Packages**: @iodev/* namespace on GitHub registry
+- device-orchestration-server (2.0.3)
+- analytics-metrics-server (1.0.1)
+- opportunity-discovery-server (0.1.1)
+- caelum-tier0-llm (1.0.0)
 
 ---
 

@@ -6,7 +6,7 @@
 
 ## Quick Context
 
-This is a **meta-repository** containing 9 interconnected AI/ML projects for autonomous trading and development.
+This is a **meta-repository** containing 8 interconnected AI/ML projects for autonomous trading and development.
 
 **Critical Infrastructure**:
 - **GPU Servers**: 10.32.3.44 and 10.32.3.62 (both mount NFS from 10.32.3.27 - instant code access)
@@ -20,15 +20,16 @@ This is a **meta-repository** containing 9 interconnected AI/ML projects for aut
 
 | Submodule | Purpose | Ports | CLAUDE.md |
 |-----------|---------|-------|-----------|
-| **PassiveIncomeMaximizer** | 9-agent trading system | 5000, 5500, 5002 | [Link](./PassiveIncomeMaximizer/CLAUDE.md) |
+| **PassiveIncomeMaximizer** | 9-agent trading system (PRIMARY) | 5000, 5500, 5002 | [Link](./PassiveIncomeMaximizer/CLAUDE.md) |
 | **finvec** | ML predictions (V6/V7) | 8002, 18000 | [Link](./finvec/CLAUDE.md) |
-| **caelum** | MCP servers, self-evolution | - | [Link](./caelum/CLAUDE.md) |
 | **concept-graph** | Knowledge graphs, compression | - | [Link](./concept-graph/CLAUDE.md) |
 | **democratic-congress** | Multi-LLM voting | 3000, 5173 | [Link](./democratic-congress/CLAUDE.md) |
 | fincoll | V7 prediction API | 8002 | (subset of finvec) |
 | senvec | Sentiment API | 18000 | (subset of finvec) |
 | caelum-unified | Shared infrastructure | 15432 | (check submodule) |
 | opencode | Dev tools | - | (check submodule) |
+
+**Note**: `caelum` MCP servers managed separately at github.com/iodev/caelum
 
 **For vision and interconnections**: [docs/SUBMODULE_OVERVIEW.md](./docs/SUBMODULE_OVERVIEW.md)
 
@@ -48,9 +49,8 @@ This is a **meta-repository** containing 9 interconnected AI/ML projects for aut
 4. Train on GPU: `ssh rford@10.32.3.44`
 
 ### MCP Servers, Orchestration, Automation
-1. Read: [caelum/CLAUDE.md](./caelum/CLAUDE.md)
-2. Check self-evolution workflows first
-3. Published packages: @iodev/* on npm
+1. Caelum MCP managed separately: github.com/iodev/caelum
+2. Published packages: @iodev/* on npm
 
 ### Knowledge Graphs, Concept Chains
 1. Read: [concept-graph/CLAUDE.md](./concept-graph/CLAUDE.md)
@@ -103,20 +103,19 @@ cd .. && npm run dev
 ## Cross-Repository Dependencies
 
 ```
-PassiveIncomeMaximizer
+PassiveIncomeMaximizer (PRIMARY - all roads lead here)
     ├── requires: FinColl (8002), SenVec (18000)
     ├── requires: PostgreSQL (15433), Redis (6379)
-    └── optional: Caelum MCP orchestration
+    ├── integration: Layer 1 (PIM Engine) + Layer 2 (RL) CONNECTED
+    └── learning: Meta-learner feedback loop ACTIVE
 
 FinVec/FinColl
     ├── requires: SenVec for 72D sentiment
     ├── requires: TradeStation/yfinance for data
     └── provides: V7 predictions to PIM
 
-Caelum
-    ├── orchestrates: Multi-device workflows
-    ├── provides: Notifications, self-evolution
-    └── optional: Memory for PIM agents
+caelum-unified
+    └── provides: Shared PostgreSQL, Redis, Qdrant
 ```
 
 ---

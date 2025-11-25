@@ -4,9 +4,8 @@ Meta repository for the complete Caelum AI trading and development ecosystem.
 
 ## Components
 
-- **PassiveIncomeMaximizer** - Multi-agent autonomous trading system with 9 LLM agents
+- **PassiveIncomeMaximizer** - Multi-agent autonomous trading system with 9 LLM agents (PRIMARY)
 - **finvec** - ML prediction models (V6/V7 feature vectors, cluster-based learning)
-- **caelum** - MCP servers & orchestration, self-evolution workflows
 - **caelum-unified** - Shared infrastructure (PostgreSQL, Redis, Qdrant)
 - **fincoll** - V7 prediction API (subset of finvec)
 - **senvec** - Sentiment analysis API (subset of finvec)
@@ -14,7 +13,7 @@ Meta repository for the complete Caelum AI trading and development ecosystem.
 - **democratic-congress** - Heterogeneous multi-LLM decision framework
 - **opencode** - Development tools
 
-**Note**: caelum-cli is local-only (no remote), not included as submodule
+**External**: `caelum` MCP servers managed separately at github.com/iodev/caelum
 
 ## Quick Start
 
@@ -34,9 +33,8 @@ git submodule update --remote
 
 ```
 caelum-supersystem/
-├── PassiveIncomeMaximizer/  (submodule → github.com/iodev/Passive-Income-Maximizer)
+├── PassiveIncomeMaximizer/  (submodule → github.com/iodev/Passive-Income-Maximizer)  # PRIMARY
 ├── finvec/                  (submodule → github.com/iodev/finvec)
-├── caelum/                  (submodule → github.com/iodev/caelum)
 ├── caelum-unified/          (submodule → github.com/iodev/caelum-unified)
 ├── fincoll/                 (submodule → github.com/iodev/fincoll)
 ├── senvec/                  (submodule → github.com/iodev/senvec)
@@ -100,11 +98,6 @@ git submodule update --init --recursive
 **Purpose**: V6 (335D) and V7 (336D) feature extraction, cluster-based learning, profit-aware training
 **Deployed**: FinColl API (8002), SenVec API (18000)
 
-### caelum
-**Tech**: TypeScript (MCP servers)
-**Purpose**: Multi-device orchestration, self-evolution workflows, automation
-**Published**: @iodev/* npm packages
-
 ### caelum-unified
 **Tech**: Docker, PostgreSQL, Redis, Qdrant
 **Purpose**: Shared infrastructure across all components
@@ -167,11 +160,12 @@ Each component has its own CLAUDE.md with specific instructions:
 
 | Submodule | CLAUDE.md | Focus |
 |-----------|-----------|-------|
-| PassiveIncomeMaximizer | [Link](./PassiveIncomeMaximizer/CLAUDE.md) | 9-agent swarm, trading |
+| PassiveIncomeMaximizer | [Link](./PassiveIncomeMaximizer/CLAUDE.md) | 9-agent swarm, trading (PRIMARY) |
 | finvec | [Link](./finvec/CLAUDE.md) | ML models, V6/V7, training |
-| caelum | [Link](./caelum/CLAUDE.md) | MCP servers, self-evolution |
 | concept-graph | [Link](./concept-graph/CLAUDE.md) | Knowledge graphs |
 | democratic-congress | [Link](./democratic-congress/CLAUDE.md) | Multi-LLM voting |
+
+**External**: `caelum` MCP servers at github.com/iodev/caelum
 
 **Start Here**: Read [CLAUDE.md](./CLAUDE.md) for quick ecosystem context
 

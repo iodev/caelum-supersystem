@@ -77,15 +77,16 @@ Each submodule has its own CLAUDE.md with specific instructions:
 
 | Submodule | CLAUDE.md | Purpose |
 |-----------|-----------|---------|
-| **PassiveIncomeMaximizer** | [CLAUDE.md](../PassiveIncomeMaximizer/CLAUDE.md) | Trading system, 9-agent swarm, dual frontends |
+| **PassiveIncomeMaximizer** | [CLAUDE.md](../PassiveIncomeMaximizer/CLAUDE.md) | Trading system (PRIMARY), 9-agent swarm, dual frontends |
 | **finvec** | [CLAUDE.md](../finvec/CLAUDE.md) | ML models, V6/V7 features, training, branch management |
-| **caelum** | [CLAUDE.md](../caelum/CLAUDE.md) | MCP servers, self-evolution, orchestration |
 | **concept-graph** | [CLAUDE.md](../concept-graph/CLAUDE.md) | Knowledge graphs, reconstructive memory |
 | **democratic-congress** | [CLAUDE.md](../democratic-congress/CLAUDE.md) | Multi-LLM voting, consensus building |
 | **fincoll** | (check submodule) | V7 prediction API |
 | **senvec** | [CLAUDE.md](../senvec/CLAUDE.md) | Sentiment analysis API (72D features) |
 | **caelum-unified** | (check submodule) | Shared infrastructure |
 | **opencode** | (check submodule) | Development tools |
+
+**Note**: `caelum` MCP servers managed separately at github.com/iodev/caelum
 
 **For detailed submodule vision and interconnections, see [SUBMODULE_OVERVIEW.md](./SUBMODULE_OVERVIEW.md)**
 
