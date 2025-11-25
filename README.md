@@ -133,41 +133,47 @@ git submodule update --init --recursive
 
 ## Documentation
 
-### Repository Structure & Organization
+### Repository Structure
 
-**Root Documentation** (8 active files):
-- **[CLAUDE.md](./CLAUDE.md)** - Complete Claude Code session instructions for entire ecosystem
-- **[README.md](./README.md)** - This file - repository overview and quick start
-- **[LOCAL_REPOS.md](./LOCAL_REPOS.md)** - Local-only repository tracking
-- **[ECOSYSTEM_ARCHITECTURE.md](./ECOSYSTEM_ARCHITECTURE.md)** - Core system architecture
-- **[DEPLOYMENT_STRATEGY.md](./DEPLOYMENT_STRATEGY.md)** - Deployment and operations guide
-- **[FINCOLL_RESTART_INSTRUCTIONS.md](./FINCOLL_RESTART_INSTRUCTIONS.md)** - FinColl service restart runbook
-- **[TESTING_CHECKLIST.md](./TESTING_CHECKLIST.md)** - Active testing guide
-- **[SUDO_ACCESS_NOTE.md](./SUDO_ACCESS_NOTE.md)** - Security and access reference
+```
+caelum-supersystem/
+├── CLAUDE.md              # AI session guide (start here)
+├── README.md              # This file
+├── config/                # Docker, PM2 configurations
+├── scripts/               # Shell scripts and utilities
+├── docs/
+│   ├── INDEX.md           # Master documentation index
+│   ├── SUBMODULE_OVERVIEW.md  # Vision & interconnections
+│   ├── architecture/      # System design docs
+│   ├── runbooks/          # Operational procedures
+│   ├── reference/         # Technical reference
+│   └── archive/           # Historical docs
+└── [submodules]/          # Each has own CLAUDE.md
+```
 
-**Historical Archives** ([docs/archive/](./docs/archive/)):
-- Session summaries (Oct-Nov 2025)
-- Historical planning documents
-- Completed project reports
+### Key Documents
 
-**Technical Reference** ([docs/reference/](./docs/reference/)):
-- **[SWARM_INTELLIGENCE_ARCHITECTURE.md](./docs/reference/SWARM_INTELLIGENCE_ARCHITECTURE.md)** - Major architectural design (81K)
-- **[FINVEC_PIM_INTEGRATION_ANALYSIS.md](./docs/reference/FINVEC_PIM_INTEGRATION_ANALYSIS.md)** - Integration patterns
-- **[GPU_TRAINING_STRATEGY_V4.md](./docs/reference/GPU_TRAINING_STRATEGY_V4.md)** - Training strategy
-- **[PHASE4_SELF_EVOLUTION.md](./docs/reference/PHASE4_SELF_EVOLUTION.md)** - Evolution architecture
-- Setup and configuration guides
+| Document | Purpose |
+|----------|---------|
+| [CLAUDE.md](./CLAUDE.md) | AI session startup guide |
+| [docs/INDEX.md](./docs/INDEX.md) | Master documentation index |
+| [docs/SUBMODULE_OVERVIEW.md](./docs/SUBMODULE_OVERVIEW.md) | Vision and interconnections |
+| [docs/architecture/](./docs/architecture/) | System design docs |
+| [docs/runbooks/](./docs/runbooks/) | Operational procedures |
 
-### Submodule-Specific Documentation
+### Submodule CLAUDE.md Files
 
 Each component has its own CLAUDE.md with specific instructions:
 
-- **[PassiveIncomeMaximizer/CLAUDE.md](./PassiveIncomeMaximizer/CLAUDE.md)** - Trading system, 9-agent swarm, dual frontends
-- **[finvec/CLAUDE.md](./finvec/CLAUDE.md)** - ML models, V6/V7 features, training, branch management, TradeStation
-- **[caelum/CLAUDE.md](./caelum/CLAUDE.md)** - MCP servers, self-evolution, published packages, orchestration
-- **[concept-graph/CLAUDE.md](./concept-graph/CLAUDE.md)** - Knowledge graphs, semantic reasoning
-- **[democratic-congress/CLAUDE.md](./democratic-congress/CLAUDE.md)** - Multi-LLM voting, consensus building
+| Submodule | CLAUDE.md | Focus |
+|-----------|-----------|-------|
+| PassiveIncomeMaximizer | [Link](./PassiveIncomeMaximizer/CLAUDE.md) | 9-agent swarm, trading |
+| finvec | [Link](./finvec/CLAUDE.md) | ML models, V6/V7, training |
+| caelum | [Link](./caelum/CLAUDE.md) | MCP servers, self-evolution |
+| concept-graph | [Link](./concept-graph/CLAUDE.md) | Knowledge graphs |
+| democratic-congress | [Link](./democratic-congress/CLAUDE.md) | Multi-LLM voting |
 
-**Start Here**: Read [CLAUDE.md](./CLAUDE.md) first for complete ecosystem context and decision trees
+**Start Here**: Read [CLAUDE.md](./CLAUDE.md) for quick ecosystem context
 
 ## Infrastructure
 
