@@ -1,0 +1,52 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "caelum": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Caelum Agent Swarm",
+      "options": {
+        "baseURL": "http://localhost:8090/v1"
+      },
+      "models": {
+        "caelum-swarm": {
+          "name": "Caelum Swarm (Auto-routing)",
+          "limit": {
+            "context": 8192,
+            "output": 4096
+          }
+        },
+        "caelum-fast": {
+          "name": "Caelum Fast (Low latency)",
+          "limit": {
+            "context": 4096,
+            "output": 2048
+          }
+        },
+        "caelum-quality": {
+          "name": "Caelum Quality (30B models)",
+          "limit": {
+            "context": 16384,
+            "output": 8192
+          }
+        },
+        "llama3.1:8b": {
+          "name": "Llama 3.1 8B (Local)",
+          "limit": {
+            "context": 8192,
+            "output": 4096
+          }
+        }
+      }
+    }
+  },
+  "plugin": ["opencode-openai-codex-auth"],
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    }
+  }
+}
