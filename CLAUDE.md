@@ -68,10 +68,10 @@ This is a **meta-repository** containing 8 interconnected AI/ML projects for aut
 
 ```bash
 # All services
-curl -s http://localhost:5000/api/health   # PIM Express
-curl -s http://localhost:5002/api/pim/status  # PIM Engine
-curl -s http://localhost:8002/health       # FinColl (NOTE: /health, not /api/health)
-curl -s http://localhost:18000/health      # SenVec
+curl -s http://10.32.3.27:5000/api/health   # PIM Express
+curl -s http://10.32.3.27:5002/api/pim/status  # PIM Engine
+curl -s http://10.32.3.27:8002/health       # FinColl (NOTE: /health, not /api/health)
+curl -s http://10.32.3.27:18000/health      # SenVec
 
 # Infrastructure
 redis-cli -h 10.32.3.27 ping

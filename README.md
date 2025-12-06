@@ -218,10 +218,10 @@ npm run vue  # Port 5500 - Vue3 (terminal 5)
 
 ### Health Check All Services
 ```bash
-curl http://localhost:5000/api/health   # PIM Express
-curl http://localhost:5002/api/pim/status  # PIM Engine
-curl http://localhost:8002/api/health   # FinColl
-curl http://localhost:18000/health      # SenVec
+curl http://10.32.3.27:5000/api/health   # PIM Express
+curl http://10.32.3.27:5002/api/pim/status  # PIM Engine
+curl http://10.32.3.27:8002/api/health   # FinColl
+curl http://10.32.3.27:18000/health      # SenVec
 redis-cli -h 10.32.3.27 ping           # Redis
 docker ps | grep caelum-postgres        # PostgreSQL
 ```

@@ -162,7 +162,7 @@ deploy_docker_container() {
     local timeout=60
     local elapsed=0
     while [[ $elapsed -lt $timeout ]]; do
-        if curl -sf http://localhost:8099/health &> /dev/null; then
+        if curl -sf http://10.32.3.27:8099/health &> /dev/null; then
             log_success "Container is healthy"
             break
         fi
@@ -266,8 +266,8 @@ verify_deployment() {
     fi
 
     # Check health endpoint
-    if curl -sf http://localhost:8099/health &> /dev/null; then
-        local health_response=$(curl -s http://localhost:8099/health)
+    if curl -sf http://10.32.3.27:8099/health &> /dev/null; then
+        local health_response=$(curl -s http://10.32.3.27:8099/health)
         log_success "Health check passed: $health_response"
     else
         log_error "Health check failed"
@@ -275,14 +275,14 @@ verify_deployment() {
     fi
 
     # Check TCP MCP port
-    if nc -zv localhost 8090 2>&1 | grep -q "succeeded"; then
+    if nc -zv 10.32.3.27 8090 2>&1 | grep -q "succeeded"; then
         log_success "TCP MCP port (8090) is accessible"
     else
         log_warning "TCP MCP port (8090) is not accessible"
     fi
 
     # Check WebSocket MCP port
-    if nc -zv localhost 8091 2>&1 | grep -q "succeeded"; then
+    if nc -zv 10.32.3.27 8091 2>&1 | grep -q "succeeded"; then
         log_success "WebSocket MCP port (8091) is accessible"
     else
         log_warning "WebSocket MCP port (8091) is not accessible"
@@ -308,9 +308,9 @@ ${BLUE}📋 Deployment Summary:${NC}
    Container: caelum-unified-secondary-$NODE_ID
 
 ${BLUE}🌐 Service Endpoints:${NC}
-   Health Check: http://localhost:8099/health
-   TCP MCP Server: tcp://localhost:8090
-   WebSocket MCP: ws://localhost:8091
+   Health Check: http://10.32.3.27:8099/health
+   TCP MCP Server: tcp://10.32.3.27:8090
+   WebSocket MCP: ws://10.32.3.27:8091
 
 ${BLUE}🔧 MCP Configuration:${NC}
    Claude Config: ~/.claude.json
@@ -323,7 +323,7 @@ ${BLUE}📊 Docker Management:${NC}
    Restart: docker-compose -f $CAELUM_UNIFIED_DIR/docker-compose.secondary.yml restart
 
 ${BLUE}🧪 Testing:${NC}
-   Test health: curl http://localhost:8099/health
+   Test health: curl http://10.32.3.27:8099/health
    View container status: docker ps --filter "name=caelum-unified"
 
 ${BLUE}📚 Documentation:${NC}

@@ -30,7 +30,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        USER INTERFACE                            │
-│  PIM Web Dashboard (React) - http://localhost:3000              │
+│  PIM Web Dashboard (React) - http://10.32.3.27:3000              │
 │  - Portfolio view, agent status, predictions, P/L tracking      │
 └────────────────┬────────────────────────────────────────────────┘
                  │
@@ -54,7 +54,7 @@
 │  └─ Calls FinVec API for AI predictions                         │
 └────────────────┬────────────────────────────────────────────────┘
                  │
-                 │ REST API (http://localhost:5000)
+                 │ REST API (http://10.32.3.27:5000)
                  ↓
 ┌─────────────────────────────────────────────────────────────────┐
 │                      FINVEC API SERVER                           │
@@ -327,7 +327,7 @@ return strategy;
 - **V4 Models**: Data generation 80% complete (~1h remaining)
 - **GPU Training**: Will auto-start on 3 GPUs when data ready
 - **Expected V4**: 30-50% performance improvement over V3
-- **API Server**: FastAPI running on localhost:5000
+- **API Server**: FastAPI running on 10.32.3.27:5000
 
 ### PIM Project
 - **Status**: Operational with FinVec v2 integration

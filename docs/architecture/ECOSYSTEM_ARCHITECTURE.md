@@ -66,9 +66,9 @@ The Caelum trading system consists of **4 independent repositories** working tog
 
 ```bash
 # All services on one machine
-PIM:      localhost:5000
-FinColl:  localhost:8001
-SenVec:   localhost:18000-18004
+PIM:      10.32.3.27:5000
+FinColl:  10.32.3.27:8001
+SenVec:   10.32.3.27:18000-18004
 FinVec:   Native .venv training
 ```
 
@@ -185,7 +185,7 @@ CREATE TABLE service_configs (
   version VARCHAR(20) NOT NULL,       -- 'v1.0.0', 'v2.0.0-beta'
   config_json JSONB NOT NULL,         -- Service-specific config
   environment VARCHAR(20) NOT NULL,   -- 'dev', 'test', 'prod'
-  host VARCHAR(100),                  -- '10.32.3.44', 'localhost'
+  host VARCHAR(100),                  -- '10.32.3.44', '10.32.3.27'
   port INTEGER,
   enabled BOOLEAN DEFAULT true,
   created_at TIMESTAMP DEFAULT NOW(),
@@ -413,7 +413,7 @@ MODEL_REGISTRY = {
     "senvec": {
       "status": "healthy",
       "version": "v1.0.0",
-      "url": "http://localhost:18000",
+      "url": "http://10.32.3.27:18000",
       "microservices": {
         "sentimentrader": "healthy",
         "alphavantage": "healthy",
@@ -570,9 +570,9 @@ cd ~/caelum/ss/fincoll && source .venv/bin/activate && python -m fincoll.server
 cd ~/caelum/ss/PassiveIncomeMaximizer && npm run dev
 
 # Check all services
-curl http://localhost:18000/health  # SenVec
-curl http://localhost:8001/health   # FinColl
-curl http://localhost:5000/api/trading-bot/fincoll-status  # PIM
+curl http://10.32.3.27:18000/health  # SenVec
+curl http://10.32.3.27:8001/health   # FinColl
+curl http://10.32.3.27:5000/api/trading-bot/fincoll-status  # PIM
 ```
 
 ### Start Entire Ecosystem (Production - Multi-Host)
@@ -593,7 +593,7 @@ curl http://10.32.3.27:5000/api/system/health
 
 ```bash
 # PIM triggers this automatically, or manually:
-curl -X POST http://localhost:5000/api/deployment/deploy \
+curl -X POST http://10.32.3.27:5000/api/deployment/deploy \
   -H "Content-Type: application/json" \
   -d '{
     "service": "fincoll",

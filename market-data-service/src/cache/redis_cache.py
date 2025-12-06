@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class RedisCache:
     """Redis-based cache for market data with configurable TTL"""
     
-    def __init__(self, host: str = 'localhost', port: int = 6379, db: int = 0):
+    def __init__(self, host: str = '10.32.3.27', port: int = 6379, db: int = 0):
         try:
             self.redis = redis.Redis(
                 host=host,

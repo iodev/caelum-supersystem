@@ -49,7 +49,7 @@ result = engine.predict(ohlc_data, symbol)
 ### The Endpoint PIM Uses
 
 ```bash
-POST http://localhost:8002/api/v1/inference/v7/predict/{symbol}
+POST http://10.32.3.27:8002/api/v1/inference/v7/predict/{symbol}
 
 # Returns
 {
@@ -228,7 +228,7 @@ POST /api/v1/inference/predict/{symbol}
 - Device selection in `V7InferenceEngine.__init__(device='cuda:0')`
 - Falls back to CPU if GPU unavailable
 
-**Current Session**: Running on CPU (localhost, no GPU)
+**Current Session**: Running on CPU (10.32.3.27, no GPU)
 - Predictions will be slower (~500ms vs ~50ms)
 - But they WILL work
 
@@ -245,7 +245,7 @@ TRADESTATION_API_URL=https://sim-api.tradestation.com/v3
 
 **PIM Needs**:
 ```bash
-FINCOLL_URL=http://localhost:8002  # Or http://10.32.3.27:8002 for remote
+FINCOLL_URL=http://10.32.3.27:8002  # Or http://10.32.3.27:8002 for remote
 ```
 
 ---
@@ -260,7 +260,7 @@ export FINCOLL_PORT=8002 CREDENTIALS_DIR=/home/rford/caelum/ss
 .venv/bin/python -m fincoll.server &
 
 # 2. Test prediction
-curl -X POST "http://localhost:8002/api/v1/inference/v7/predict/AAPL" | jq '.'
+curl -X POST "http://10.32.3.27:8002/api/v1/inference/v7/predict/AAPL" | jq '.'
 
 # Expected output:
 # {
@@ -273,7 +273,7 @@ curl -X POST "http://localhost:8002/api/v1/inference/v7/predict/AAPL" | jq '.'
 
 # 3. Test from PIM
 cd /home/rford/caelum/ss/PassiveIncomeMaximizer
-curl http://localhost:5000/api/system/status | jq '.fincoll'
+curl http://10.32.3.27:5000/api/system/status | jq '.fincoll'
 ```
 
 ---

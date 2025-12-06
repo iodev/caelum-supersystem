@@ -216,7 +216,7 @@ class SecondaryNodeSetup:
         while elapsed < timeout:
             try:
                 result = subprocess.run(
-                    ['curl', '-sf', 'http://localhost:8099/health'],
+                    ['curl', '-sf', 'http://10.32.3.27:8099/health'],
                     capture_output=True,
                     timeout=2
                 )
@@ -311,7 +311,7 @@ class SecondaryNodeSetup:
         # Check health endpoint
         try:
             result = subprocess.run(
-                ['curl', '-sf', 'http://localhost:8099/health'],
+                ['curl', '-sf', 'http://10.32.3.27:8099/health'],
                 capture_output=True,
                 text=True,
                 timeout=5
@@ -329,7 +329,7 @@ class SecondaryNodeSetup:
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(2)
-            result = sock.connect_ex(('localhost', 8090))
+            result = sock.connect_ex(('10.32.3.27', 8090))
             sock.close()
 
             if result == 0:
@@ -343,7 +343,7 @@ class SecondaryNodeSetup:
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(2)
-            result = sock.connect_ex(('localhost', 8091))
+            result = sock.connect_ex(('10.32.3.27', 8091))
             sock.close()
 
             if result == 0:
@@ -372,9 +372,9 @@ class SecondaryNodeSetup:
    Container: caelum-unified-secondary-{self.node_id}
 
 {Colors.BLUE}🌐 Service Endpoints:{Colors.NC}
-   Health Check: http://localhost:8099/health
-   TCP MCP Server: tcp://localhost:8090
-   WebSocket MCP: ws://localhost:8091
+   Health Check: http://10.32.3.27:8099/health
+   TCP MCP Server: tcp://10.32.3.27:8090
+   WebSocket MCP: ws://10.32.3.27:8091
 
 {Colors.BLUE}🔧 MCP Configuration:{Colors.NC}
    Claude Config: {self.claude_config_file}
@@ -387,7 +387,7 @@ class SecondaryNodeSetup:
    Restart: cd {self.caelum_unified_dir} && docker-compose -f docker-compose.secondary.yml restart
 
 {Colors.BLUE}🧪 Testing:{Colors.NC}
-   Test health: curl http://localhost:8099/health
+   Test health: curl http://10.32.3.27:8099/health
    View container status: docker ps --filter "name=caelum-unified"
 
 {Colors.BLUE}📚 Documentation:{Colors.NC}

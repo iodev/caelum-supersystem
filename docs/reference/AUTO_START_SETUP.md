@@ -147,10 +147,10 @@ The health monitor (`/home/rford/caelum/ss/health-monitor.sh`) checks:
 tail -f /home/rford/caelum/ss/logs/health-monitor.log
 
 # Check PIM health endpoint
-curl http://localhost:5000/api/health | jq
+curl http://10.32.3.27:5000/api/health | jq
 
 # Quick status
-curl http://localhost:5000/api/health/check
+curl http://10.32.3.27:5000/api/health/check
 ```
 
 ---
@@ -238,7 +238,7 @@ pm2 list
 ### Test 3: Position Recovery
 ```bash
 # Check recovery status endpoint (add to routes)
-curl http://localhost:5000/api/position-recovery/status | jq
+curl http://10.32.3.27:5000/api/position-recovery/status | jq
 ```
 
 ---
@@ -333,8 +333,8 @@ pm2 restart all
 pm2 logs --lines 1000
 
 # Check system health
-curl http://localhost:5000/api/health | jq
+curl http://10.32.3.27:5000/api/health | jq
 
 # Check active positions
-curl http://localhost:5000/api/positions | jq
+curl http://10.32.3.27:5000/api/positions | jq
 ```

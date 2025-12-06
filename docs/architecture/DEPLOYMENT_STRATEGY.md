@@ -226,9 +226,9 @@ sudo systemctl start caelum-ecosystem
 **Host**: WSL (10.32.3.27)
 
 ```
-PIM:      localhost:5000
-FinColl:  localhost:8001
-SenVec:   localhost:18000-18004
+PIM:      10.32.3.27:5000
+FinColl:  10.32.3.27:8001
+SenVec:   10.32.3.27:18000-18004
 FinVec:   Native training
 ```
 
@@ -311,7 +311,7 @@ INSERT INTO service_configs VALUES (
 **Endpoint**: `GET /api/config/:service/:version`
 
 ```bash
-curl http://localhost:5000/api/config/fincoll/v1.0.0
+curl http://10.32.3.27:5000/api/config/fincoll/v1.0.0
 ```
 
 **Response**:
@@ -384,7 +384,7 @@ app = FastAPI()
 **Endpoint**: `POST /api/deployment/deploy`
 
 ```bash
-curl -X POST http://localhost:5000/api/deployment/deploy \
+curl -X POST http://10.32.3.27:5000/api/deployment/deploy \
   -H "Content-Type: application/json" \
   -d '{
     "service": "fincoll",
@@ -417,13 +417,13 @@ curl -X POST http://localhost:5000/api/deployment/deploy \
 **Auto-Promote**:
 
 ```bash
-curl -X POST http://localhost:5000/api/deployment/promote/d12345
+curl -X POST http://10.32.3.27:5000/api/deployment/promote/d12345
 ```
 
 **Rollback**:
 
 ```bash
-curl -X POST http://localhost:5000/api/deployment/rollback/fincoll
+curl -X POST http://10.32.3.27:5000/api/deployment/rollback/fincoll
 ```
 
 ---
@@ -457,8 +457,8 @@ FINCOLL_TEST_VERSION=v2.0.0-beta \
   docker-compose -f docker-compose.ecosystem.yml up fincoll-test -d
 
 # Compare performance
-curl http://localhost:8001/api/v1/inference/predict/AAPL  # v1.0.0
-curl http://localhost:8002/api/v1/inference/predict/AAPL  # v2.0.0-beta
+curl http://10.32.3.27:8001/api/v1/inference/predict/AAPL  # v1.0.0
+curl http://10.32.3.27:8002/api/v1/inference/predict/AAPL  # v2.0.0-beta
 ```
 
 ### Production Environment
@@ -520,8 +520,8 @@ docker-compose -f docker-compose.ecosystem.yml --profile monitoring up -d
 ```
 
 Access:
-- **Grafana**: http://localhost:3001 (admin/admin)
-- **Prometheus**: http://localhost:9090
+- **Grafana**: http://10.32.3.27:3001 (admin/admin)
+- **Prometheus**: http://10.32.3.27:9090
 
 ---
 
@@ -557,7 +557,7 @@ sudo systemctl restart fincoll
 **Model Rollback** (via PIM API):
 
 ```bash
-curl -X POST http://localhost:5000/api/config/fincoll/update \
+curl -X POST http://10.32.3.27:5000/api/config/fincoll/update \
   -H "Content-Type: application/json" \
   -d '{
     "model_checkpoint_dir": "/home/rford/caelum/ss/finvec/checkpoints/llm1-tech-v1.0.0.pt"
@@ -628,7 +628,7 @@ docker-compose -f docker-compose.ecosystem.yml --profile production up -d
 ### Check Status
 
 ```bash
-curl http://localhost:5000/api/system/health
+curl http://10.32.3.27:5000/api/system/health
 ```
 
 ---

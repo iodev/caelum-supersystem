@@ -25,10 +25,10 @@ Market Data Service is the **centralized data access layer** for the entire Cael
 
 ```bash
 # Health check
-curl http://localhost:8010/health
+curl http://10.32.3.27:8010/health
 
 # Market status (always works, no auth needed)
-curl http://localhost:8010/api/market/status
+curl http://10.32.3.27:8010/api/market/status
 
 # PM2 status
 npx pm2 status market-data-service
@@ -100,7 +100,7 @@ async def get_new_data(symbol: str, use_cache: bool = True):
 
 3. **Test**
 ```bash
-curl http://localhost:8010/api/new/AAPL
+curl http://10.32.3.27:8010/api/new/AAPL
 ```
 
 ### Restarting the Service
@@ -154,7 +154,7 @@ Override with `use_cache=false` query parameter for fresh data.
 
 **Status Check**:
 ```bash
-curl http://localhost:8010/health | jq '.tradestation_authenticated'
+curl http://10.32.3.27:8010/health | jq '.tradestation_authenticated'
 ```
 
 ---
@@ -167,13 +167,13 @@ import httpx
 
 async def get_options_chain(symbol: str):
     async with httpx.AsyncClient() as client:
-        response = await client.get(f"http://localhost:8010/api/options/chain/{symbol}")
+        response = await client.get(f"http://10.32.3.27:8010/api/options/chain/{symbol}")
         return response.json()
 ```
 
 ### From PIM (TypeScript)
 ```typescript
-const response = await fetch('http://localhost:8010/api/quotes/AAPL');
+const response = await fetch('http://10.32.3.27:8010/api/quotes/AAPL');
 const quote = await response.json();
 ```
 
@@ -217,7 +217,7 @@ vim src/api/server.py
 npx pm2 restart market-data-service
 
 # Test
-curl http://localhost:8010/api/quotes/AAPL
+curl http://10.32.3.27:8010/api/quotes/AAPL
 
 # Check logs for errors
 npx pm2 logs market-data-service --lines 20

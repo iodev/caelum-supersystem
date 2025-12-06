@@ -24,7 +24,7 @@ module.exports = {
                 NODE_ENV: "development",
                 PIM_SERVER_PORT: "5000",
                 DATABASE_URL:
-                    "postgresql://pim_user:pim_secure_2025!@localhost:15433/pim_database",
+                    "postgresql://pim_user:pim_secure_2025!@10.32.3.27:15433/pim_database",
             },
             error_file:
                 "/home/rford/caelum/ss/PassiveIncomeMaximizer/logs/pim-error.log",

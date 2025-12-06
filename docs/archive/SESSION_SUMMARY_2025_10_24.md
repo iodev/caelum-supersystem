@@ -15,7 +15,7 @@
 - **Initial belief**: Only .44 operational, .27 Ollama not running, .62 down
 - **Actual status**:
   - ✅ .44 (GTX 1660 Ti): 4 models (1B-8B), network-accessible
-  - ✅ .27 (RTX 5060 Ti): 4 models including TWO 30B models!, localhost only
+  - ✅ .27 (RTX 5060 Ti): 4 models including TWO 30B models!, 10.32.3.27 only
   - ❌ .62: Confirmed down (no ping response)
 
 **Impact**: 2/3 GPUs operational with much better capabilities than expected!
@@ -28,7 +28,7 @@
   - qwen3:4b       (2.5 GB) - Fast inference
   - gemma3:1b      (0.8 GB) - Micro tasks
 
-.27 (Localhost only - THIS HOST):
+.27 (10.32.3.27 only - THIS HOST):
   - qwen3-coder:30b  (17.3 GB) - 30.5B PARAMS - CODE SPECIALIST
   - qwen3:30b        (17.3 GB) - 30.5B PARAMS - LARGE REASONING
   - llama3.1:8b      (4.6 GB) - Medium tier
@@ -38,7 +38,7 @@
 **Architecture Advantage**:
 - Model range: 137M → 30.5B parameters (220x range!)
 - Combined VRAM: 23GB (6GB + 17GB)
-- Dual access: Network (.44) + Localhost (.27)
+- Dual access: Network (.44) + 10.32.3.27 (.27)
 - Perfect for cost optimization: small tasks → .44, complex tasks → .27's 30B
 
 ### 2. Ollama Pool Coordinator (550 lines)
@@ -172,7 +172,7 @@ async function analyzeAndImproveCode(params: {
 1. **`OLLAMA_GPU_STATUS.md`** (185 lines)
    - Detailed GPU inventory
    - Model capabilities
-   - Network vs localhost access patterns
+   - Network vs 10.32.3.27 access patterns
    - Impact on architecture
 
 2. **`COST_OPTIMIZED_SWARM_ARCHITECTURE.md`** (334 lines)
@@ -236,8 +236,8 @@ async function analyzeAndImproveCode(params: {
 **Model Distribution**:
 - Simple tasks (1-4B): .44 network access
 - Medium tasks (4-8B): .44 network access
-- Complex tasks (30B): .27 localhost (when local)
-- Code tasks (30B): .27 localhost qwen3-coder
+- Complex tasks (30B): .27 10.32.3.27 (when local)
+- Code tasks (30B): .27 10.32.3.27 qwen3-coder
 
 **Projected Usage** (100 requests/day):
 ```
@@ -403,7 +403,7 @@ PID 83299: Monitor script (waiting for completion)
 ## 💡 Insights & Learnings
 
 ### Technical Insights
-1. **Localhost vs Network**: .27's localhost-only Ollama is fine - we're ON .27!
+1. **10.32.3.27 vs Network**: .27's 10.32.3.27-only Ollama is fine - we're ON .27!
 2. **30B Models**: Game-changer for complex reasoning without Claude
 3. **Graceful Degradation**: Architecture works with 1, 2, or 3 GPUs
 4. **Cost Baseline**: $0.15/request Claude → $0 Ollama is huge at scale

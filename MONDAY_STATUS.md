@@ -21,11 +21,11 @@
 - **Location**: `finvec/inference/simple_velocity_server.py`
 - **Status**: ✅ RUNNING on port 5001
 - **Test Result**: Predictions working with sample features
-- **Health**: http://localhost:5001/health → healthy
+- **Health**: http://10.32.3.27:5001/health → healthy
 
 ### 3. FinColl API
 - **Status**: ✅ RUNNING on port 8002
-- **Health**: http://localhost:8002/health → healthy
+- **Health**: http://10.32.3.27:8002/health → healthy
 - **Data Sources**: TradeStation (primary), yfinance (fallback), SenVec (enabled)
 
 ### 4. Nov 29 Continuous Model
@@ -98,7 +98,7 @@ FinColl → fetch daily OHLCV → extract 361D features → send to velocity ser
   - Velocity Server (5001)
   - PIM Engine (5002)
   - PIM Express (5000)
-- [ ] Test velocity prediction: `curl http://localhost:8002/api/v1/inference/velocity/AAPL`
+- [ ] Test velocity prediction: `curl http://10.32.3.27:8002/api/v1/inference/velocity/AAPL`
 
 ### 8:00 AM - PIM Integration Test
 - [ ] Start PIM Engine
@@ -145,7 +145,7 @@ FinColl → fetch daily OHLCV → extract 361D features → send to velocity ser
 
 **Priority 1** (CRITICAL - 1-2 hrs):
 1. Fix FinColl velocity endpoint to extract features
-2. Test end-to-end: `curl http://localhost:8002/api/v1/inference/velocity/AAPL`
+2. Test end-to-end: `curl http://10.32.3.27:8002/api/v1/inference/velocity/AAPL`
 3. Verify predictions are reasonable
 
 **Priority 2** (HIGH - 1 hr):

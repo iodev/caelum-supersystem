@@ -9,7 +9,7 @@ module.exports = {
             env: {
                 PORT: 8011,
                 PYTHONPATH: "/home/rford/caelum/caelum-supersystem/opportunity-scanner",
-                MARKET_DATA_SERVICE_URL: "http://localhost:8010"
+                MARKET_DATA_SERVICE_URL: "http://10.32.3.27:8010"
             },
             out_file: "/home/rford/.pm2/logs/opportunity-scanner-out.log",
             error_file: "/home/rford/.pm2/logs/opportunity-scanner-error.log",

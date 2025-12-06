@@ -58,16 +58,16 @@ npx pm2 start ecosystem.config.js
 
 ```bash
 # Health check
-curl http://localhost:8010/health
+curl http://10.32.3.27:8010/health
 
 # Market status
-curl http://localhost:8010/api/market/status
+curl http://10.32.3.27:8010/api/market/status
 
 # Get quote (requires TradeStation authentication)
-curl http://localhost:8010/api/quotes/AAPL
+curl http://10.32.3.27:8010/api/quotes/AAPL
 
 # Get options chain
-curl http://localhost:8010/api/options/chain/AAPL
+curl http://10.32.3.27:8010/api/options/chain/AAPL
 ```
 
 ## Configuration

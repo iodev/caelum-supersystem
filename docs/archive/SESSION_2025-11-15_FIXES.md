@@ -7,13 +7,13 @@
 **Problem**: `~/.bashrc` exported `DATABASE_URL` with wrong credentials, overriding .env files
 ```bash
 # Old value in .bashrc:
-export DATABASE_URL=postgresql://postgres:hkEbx85ZUBQegq930kNg@localhost:15432/pim_prod
+export DATABASE_URL=postgresql://postgres:hkEbx85ZUBQegq930kNg@10.32.3.27:15432/pim_prod
 ```
 
 **Fix**: Commented out in `~/.bashrc`:
 ```bash
 # DISABLED - Let each project use its own .env file instead
-# export DATABASE_URL=postgresql://postgres:hkEbx85ZUBQegq930kNg@localhost:15432/pim_prod
+# export DATABASE_URL=postgresql://postgres:hkEbx85ZUBQegq930kNg@10.32.3.27:15432/pim_prod
 ```
 
 **Impact**: Each project now correctly loads DATABASE_URL from its own .env file
@@ -39,8 +39,8 @@ export DATABASE_URL=postgresql://postgres:hkEbx85ZUBQegq930kNg@localhost:15432/p
 
 **Changes**:
 - Added FinColl and SenVec to services array
-- Queries `http://localhost:8002/health` for FinColl
-- Queries `http://localhost:18000/health` for SenVec
+- Queries `http://10.32.3.27:8002/health` for FinColl
+- Queries `http://10.32.3.27:18000/health` for SenVec
 - Displays service status and health counts
 
 **Location**: `/home/rford/caelum/ss/PassiveIncomeMaximizer/src/views/SystemHealth.vue:307-352`
@@ -102,8 +102,8 @@ pm2 save
 ### After Reboot:
 ```bash
 pm2 list                                    # Verify all services auto-started
-curl http://localhost:8002/health | jq     # Test FinColl
-curl http://localhost:18000/health | jq    # Test SenVec
+curl http://10.32.3.27:8002/health | jq     # Test FinColl
+curl http://10.32.3.27:18000/health | jq    # Test SenVec
 ```
 
 ---

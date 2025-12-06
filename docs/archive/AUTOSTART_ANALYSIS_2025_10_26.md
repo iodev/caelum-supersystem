@@ -368,7 +368,7 @@ echo "3. Redis:"
 redis-cli -h 10.32.3.27 ping 2>/dev/null || echo "❌ Not accessible"
 echo ""
 echo "4. PostgreSQL:"
-timeout 1 bash -c "echo > /dev/tcp/localhost/15432" 2>/dev/null && echo "✅ Running" || echo "❌ Stopped"
+timeout 1 bash -c "echo > /dev/tcp/10.32.3.27/15432" 2>/dev/null && echo "✅ Running" || echo "❌ Stopped"
 echo ""
 echo "5. Running processes:"
 ps aux | grep -E "finvec|python|node" | grep -v grep | wc -l

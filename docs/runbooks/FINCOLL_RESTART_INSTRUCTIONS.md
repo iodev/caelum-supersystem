@@ -40,8 +40,8 @@ export FINCOLL_PORT=8002 CREDENTIALS_DIR=/home/rford/caelum/ss
 nohup python -m fincoll.server > /tmp/fincoll.log 2>&1 &
 
 # Test
-curl http://localhost:8002/health
-curl -X POST "http://localhost:8002/api/v1/inference/v7/predict/AAPL" | jq '.'
+curl http://10.32.3.27:8002/health
+curl -X POST "http://10.32.3.27:8002/api/v1/inference/v7/predict/AAPL" | jq '.'
 ```
 
 ---

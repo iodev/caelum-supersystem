@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class OptionsSpreadScanner:
     """Scanner for options spread opportunities"""
     
-    def __init__(self, market_data_url: str = "http://localhost:8010"):
+    def __init__(self, market_data_url: str = "http://10.32.3.27:8010"):
         self.market_data_url = market_data_url
         self.client = httpx.AsyncClient(timeout=30.0)
     

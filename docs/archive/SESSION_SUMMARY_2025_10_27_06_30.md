@@ -85,7 +85,7 @@
 - ✅ Caelum client integration tested (8/8 tests passed)
 - ✅ Auto-storage for FinVec predictions implemented
 - ✅ 4 analytics query functions created
-- ✅ MongoDB connection fixed (localhost)
+- ✅ MongoDB connection fixed (10.32.3.27)
 
 **caelum-unified** (completed in parallel):
 - ✅ Ollama CUDA error diagnosed (VRAM issue)
@@ -284,7 +284,7 @@ PID 6801: seq800 part2 (symbols 40-117)
 mongodb://adminroderick:***@10.32.3.27:27017/PIM_PROD
 
 // NEW (works)
-mongodb://adminroderick:***@localhost:27017/PIM_PROD
+mongodb://adminroderick:***@10.32.3.27:27017/PIM_PROD
 ```
 
 ---

@@ -83,7 +83,7 @@ caelum-cli/             # CLI tools for cluster management
 ```
 
 **Current Status**:
-- ✅ MCP server running (localhost:8090)
+- ✅ MCP server running (10.32.3.27:8090)
 - ✅ Web interface operational (port 8082)
 - ✅ Phase 1 complete: Unified interface
 - 🚧 Phase 2 in progress: Service swarm architecture

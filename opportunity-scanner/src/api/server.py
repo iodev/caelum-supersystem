@@ -54,7 +54,7 @@ async def startup_event():
     
     logger.info("Starting Opportunity Scanner...")
     
-    market_data_url = os.getenv('MARKET_DATA_SERVICE_URL', 'http://localhost:8010')
+    market_data_url = os.getenv('MARKET_DATA_SERVICE_URL', 'http://10.32.3.27:8010')
     
     options_scanner = OptionsSpreadScanner(market_data_url)
     regime_detector = RegimeDetector(market_data_url)

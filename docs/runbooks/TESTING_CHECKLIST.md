@@ -143,7 +143,7 @@ MONGODB_URL="mongodb://pim_user:pim_password@10.32.3.27:27117/PIM_PROD?authSourc
   npx jest server/tests/feature/finvec-caelum-integration.feature.test.ts
 
 # API endpoint tests (requires PIM server running)
-curl -X POST http://localhost:3000/api/finvec/drift/monitor \
+curl -X POST http://10.32.3.27:3000/api/finvec/drift/monitor \
   -H "Content-Type: application/json" \
   -d '{"symbols": ["AAPL", "MSFT"], "lookbackDays": 7}'
 ```

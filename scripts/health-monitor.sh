@@ -102,7 +102,7 @@ if ! check_pm2_process "pim-server"; then
   CRITICAL_FAILURE=true
   FAILED_SERVICES+=("pim-server")
   restart_pm2_process "pim-server"
-elif ! check_service "PIM Server" "http://localhost:5000/api/health/check"; then
+elif ! check_service "PIM Server" "http://10.32.3.27:5000/api/health/check"; then
   alert "CRITICAL: PIM Server not responding to health checks!"
   CRITICAL_FAILURE=true
   FAILED_SERVICES+=("pim-server")
@@ -127,7 +127,7 @@ if ! check_pm2_process "fincoll-server"; then
   alert "WARNING: FinColl Server is down!"
   FAILED_SERVICES+=("fincoll-server")
   restart_pm2_process "fincoll-server"
-elif ! check_service "FinColl" "http://localhost:8001/health"; then
+elif ! check_service "FinColl" "http://10.32.3.27:8001/health"; then
   alert "WARNING: FinColl not responding!"
   FAILED_SERVICES+=("fincoll-server")
   restart_pm2_process "fincoll-server"
@@ -141,7 +141,7 @@ if ! check_pm2_process "senvec-aggregator"; then
   log "WARNING: SenVec Aggregator is down (non-critical)"
   FAILED_SERVICES+=("senvec-aggregator")
   # Don't auto-restart - it's optional
-elif ! check_service "SenVec" "http://localhost:18000/health" 3; then
+elif ! check_service "SenVec" "http://10.32.3.27:18000/health" 3; then
   log "WARNING: SenVec not responding (non-critical)"
 fi
 
@@ -164,7 +164,7 @@ fi
 # 6. Check for Active Positions (CRITICAL CHECK)
 # ============================================================================
 log "Checking for active positions..."
-ACTIVE_POSITIONS=$(curl -sf http://localhost:5000/api/positions 2>/dev/null | jq -r '.count // 0' || echo "0")
+ACTIVE_POSITIONS=$(curl -sf http://10.32.3.27:5000/api/positions 2>/dev/null | jq -r '.count // 0' || echo "0")
 log "Active positions: $ACTIVE_POSITIONS"
 
 if [[ "$ACTIVE_POSITIONS" -gt 0 ]] && [[ "$CRITICAL_FAILURE" = true ]]; then

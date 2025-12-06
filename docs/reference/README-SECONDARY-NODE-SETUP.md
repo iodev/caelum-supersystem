@@ -141,7 +141,7 @@ docker-compose -f docker-compose.secondary.yml restart
 
 ```bash
 # Test health endpoint
-curl http://localhost:8099/health
+curl http://10.32.3.27:8099/health
 
 # Check container status
 docker exec caelum-unified-secondary-[NODE_ID] env | grep -E "PRIMARY|PORT"
@@ -193,7 +193,7 @@ cd ~/caelum/ss
 
 # 5. Verify deployment
 docker ps --filter "name=caelum-unified"
-curl http://localhost:8099/health
+curl http://10.32.3.27:8099/health
 ```
 
 ## Verification Checklist
@@ -201,9 +201,9 @@ curl http://localhost:8099/health
 After running the setup script, verify:
 
 - [ ] Docker container is running: `docker ps --filter "name=caelum-unified-secondary"`
-- [ ] Health endpoint responds: `curl http://localhost:8099/health`
-- [ ] TCP MCP port accessible: `nc -zv localhost 8090`
-- [ ] WebSocket port accessible: `nc -zv localhost 8091`
+- [ ] Health endpoint responds: `curl http://10.32.3.27:8099/health`
+- [ ] TCP MCP port accessible: `nc -zv 10.32.3.27 8090`
+- [ ] WebSocket port accessible: `nc -zv 10.32.3.27 8091`
 - [ ] Primary node reachable: `ping -c 1 10.32.3.27`
 - [ ] NFS mount active: `ls /home/rford/caelum/caelum`
 - [ ] Claude config valid: `cat ~/.claude.json | python3 -m json.tool > /dev/null`

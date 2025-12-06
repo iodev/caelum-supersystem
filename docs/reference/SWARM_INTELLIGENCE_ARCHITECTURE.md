@@ -232,7 +232,7 @@ class AgentBus {
 - **Scalability**: Single-process only (limited by Node.js event loop)
 - **Future**: Distributed Agent Bus via Redis Pub/Sub or Caelum MCP for cross-host
 
-**Caelum MCP** (TCP localhost:8090) - **🔄 PARTIAL**:
+**Caelum MCP** (TCP 10.32.3.27:8090) - **🔄 PARTIAL**:
 
 **What's Documented** (from architecture):
 - Cross-device agent coordination
@@ -555,11 +555,11 @@ cd PassiveIncomeMaximizer && npm run dev
 
 ```bash
 # WSL (10.32.3.27): Central nervous system + UI
-Caelum MCP:    localhost:8090 (TCP)
-PostgreSQL:    localhost:15432 (shared state)
-Redis:         localhost:16379 (short-term memory)
-PIM Agent:     localhost:5000 (orchestrator + UI)
-SenVec Agent:  localhost:18000-18004 (sensors)
+Caelum MCP:    10.32.3.27:8090 (TCP)
+PostgreSQL:    10.32.3.27:15432 (shared state)
+Redis:         10.32.3.27:16379 (short-term memory)
+PIM Agent:     10.32.3.27:5000 (orchestrator + UI)
+SenVec Agent:  10.32.3.27:18000-18004 (sensors)
 
 # GPU Server 1 (10.32.3.44): Prediction brain
 FinColl Agent: 10.32.3.44:8001 (inference)
@@ -909,7 +909,7 @@ export function SwarmDashboard() {
 
   useEffect(() => {
     // WebSocket connection for real-time updates
-    const ws = new WebSocket('ws://localhost:5000/api/swarm/metrics');
+    const ws = new WebSocket('ws://10.32.3.27:5000/api/swarm/metrics');
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -2319,13 +2319,13 @@ describe('E2E: User Onboarding to First Trade', () => {
 
   it('should complete full user journey', async () => {
     // 1. User registers account
-    await page.goto('http://localhost:5000/register');
+    await page.goto('http://10.32.3.27:5000/register');
     await page.type('#email', 'test@example.com');
     await page.type('#password', 'SecurePassword123!');
     await page.click('#submit');
 
     await page.waitForNavigation();
-    expect(page.url()).toBe('http://localhost:5000/dashboard');
+    expect(page.url()).toBe('http://10.32.3.27:5000/dashboard');
 
     // 2. User sets risk tolerance
     await page.click('#settings');

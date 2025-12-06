@@ -40,16 +40,16 @@ tail -100 /tmp/velocity_training.log | grep "Epoch"
 ### 2. Verify All Services Running
 ```bash
 # Velocity server
-curl http://localhost:5001/health
+curl http://10.32.3.27:5001/health
 
 # FinColl API
-curl http://localhost:8002/health
+curl http://10.32.3.27:8002/health
 
 # PIM Engine
-curl http://localhost:5002/api/pim/status
+curl http://10.32.3.27:5002/api/pim/status
 
 # PIM Express
-curl http://localhost:5000/api/health
+curl http://10.32.3.27:5000/api/health
 ```
 
 **All should return**: `{"status": "healthy"}` or similar
@@ -57,7 +57,7 @@ curl http://localhost:5000/api/health
 ### 3. Test Full Pipeline
 ```bash
 # Test velocity prediction through FinColl
-curl "http://localhost:8002/api/v1/inference/velocity/AAPL"
+curl "http://10.32.3.27:8002/api/v1/inference/velocity/AAPL"
 ```
 
 **Expected**: JSON with velocities for 5 timeframes
@@ -97,7 +97,7 @@ npm run dev &  # Port 5000
 ### 2. Run Test Trades
 ```bash
 # Test PIM decision-making on 5 symbols
-curl -X POST http://localhost:5002/api/pim/analyze \
+curl -X POST http://10.32.3.27:5002/api/pim/analyze \
   -H "Content-Type: application/json" \
   -d '{"symbols": ["SPY", "AAPL", "MSFT", "GOOGL", "AMZN"]}'
 ```
@@ -135,7 +135,7 @@ Set:
 
 ### 2. Test Connection
 ```bash
-curl http://localhost:5002/api/pim/account/status
+curl http://10.32.3.27:5002/api/pim/account/status
 ```
 
 **Expected**: Account balance, buying power, positions
@@ -145,12 +145,12 @@ curl http://localhost:5002/api/pim/account/status
 ## ⚪ 9:00 AM - Final Pre-Market Check
 
 ### Dashboard Health
-- Open: http://localhost:5000 (PIM Dashboard)
+- Open: http://10.32.3.27:5000 (PIM Dashboard)
 - Check: All agents showing green status
 - Verify: Market data streaming (pre-market activity)
 
 ### Monitoring
-- Open: http://localhost:8888 (Training monitor)
+- Open: http://10.32.3.27:8888 (Training monitor)
 - Open: http://10.32.3.27:3002 (Grafana - cost metrics)
 - Check: All metrics updating
 
@@ -225,9 +225,9 @@ pkill -f velocity_inference_server
 - Monday readiness: `/tmp/monday_readiness_*.log`
 
 **Monitoring**:
-- Training: http://localhost:8888
+- Training: http://10.32.3.27:8888
 - Grafana: http://10.32.3.27:3002
-- PIM Dashboard: http://localhost:5000
+- PIM Dashboard: http://10.32.3.27:5000
 
 **Emergency**: Stop everything, assess, decide whether to postpone live testing
 

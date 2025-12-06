@@ -100,7 +100,7 @@ PIDs saved to: `/tmp/mvp-pids.txt`
 ps aux | grep -E "layer2_service|mvp-poller|mvp-orchestrator" | grep -v grep
 
 # Check Layer 2 RL service health
-curl http://localhost:5003/health
+curl http://10.32.3.27:5003/health
 
 # View saved PIDs
 cat /tmp/mvp-pids.txt
@@ -125,8 +125,8 @@ Look for:
 
 #### Step 2.1: Check FinColl Service
 ```bash
-curl http://localhost:8002/health
-curl http://localhost:8002/api/v1/inference/velocity/AAPL
+curl http://10.32.3.27:8002/health
+curl http://10.32.3.27:8002/api/v1/inference/velocity/AAPL
 ```
 
 Expected: Health check passes, AAPL prediction returns with velocities
