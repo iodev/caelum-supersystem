@@ -22,3 +22,6 @@
 [submodule "opencode"]
 	path = opencode
 	url = https://github.com/iodev/opencode.git
+[submodule "sports-intel-ai"]
+	path = sports-intel-ai
+	url = https://github.com/iodev/sports-intel-ai.git

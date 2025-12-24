@@ -22,6 +22,7 @@ This is a **meta-repository** containing 8 interconnected AI/ML projects for aut
 |-----------|---------|-------|-----------|
 | **PassiveIncomeMaximizer** | 9-agent trading system (PRIMARY) | 5000, 5500, 5002 | [Link](./PassiveIncomeMaximizer/CLAUDE.md) |
 | **finvec** | ML predictions (V6/V7) | 8002, 18000 | [Link](./finvec/CLAUDE.md) |
+| **sports-intel-ai** | AI sports data query platform | 8003 | [Link](./sports-intel-ai/CLAUDE.md) |
 | **concept-graph** | Knowledge graphs, compression | - | [Link](./concept-graph/CLAUDE.md) |
 | **democratic-congress** | Multi-LLM voting | 3000, 5173 | [Link](./democratic-congress/CLAUDE.md) |
 | fincoll | V7 prediction API | 8002 | (subset of finvec) |
@@ -62,6 +63,11 @@ This is a **meta-repository** containing 8 interconnected AI/ML projects for aut
 2. Full-stack TypeScript (Express + Vue3)
 3. Ports: 3000 (backend), 5173 (frontend)
 
+### Sports Data AI Query Platform
+1. Read: [sports-intel-ai/CLAUDE.md](./sports-intel-ai/CLAUDE.md)
+2. Natural language sports analytics (LLM-to-SQL + RAG)
+3. Port: 8003 (FastAPI)
+
 ---
 
 ## Quick Health Check
@@ -71,6 +77,7 @@ This is a **meta-repository** containing 8 interconnected AI/ML projects for aut
 curl -s http://10.32.3.27:5000/api/health   # PIM Express
 curl -s http://10.32.3.27:5002/api/pim/status  # PIM Engine
 curl -s http://10.32.3.27:8002/health       # FinColl (NOTE: /health, not /api/health)
+curl -s http://10.32.3.27:8003/health       # Sports Intel AI
 curl -s http://10.32.3.27:18000/health      # SenVec
 
 # Infrastructure
@@ -160,6 +167,7 @@ caelum-supersystem/
 | 5500 | PIM Vue3 |
 | 5002 | PIM Engine |
 | 8002 | FinColl API |
+| 8003 | Sports Intel AI |
 | 18000 | SenVec API |
 | 3000 | Democratic Congress Backend |
 | 5173 | Democratic Congress Frontend |
@@ -169,4 +177,4 @@ caelum-supersystem/
 
 ---
 
-**Updated**: 2025-11-24
+**Updated**: 2025-12-23
