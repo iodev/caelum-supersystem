@@ -55,6 +55,10 @@
     "caelum": {
       "type": "remote",
       "url": "http://10.32.3.27:8090/sse"
+    },
+    "domain-checker": {
+      "type": "local",
+      "command": ["node", "/home/rford/caelum/caelum-supersystem/domain-checker-mcp/index.js"]
     }
   }
 }

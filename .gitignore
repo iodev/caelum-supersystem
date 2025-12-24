@@ -20,9 +20,7 @@ Thumbs.db
 **/.env
 **/.env.*
 .tradestation_token.json
-.alpha_vantage_credentials.json
-.sentimentradar_credentials.json
-.sentimentrader_credentials.json
+.*_credentials*.json
 .finage.json
 .finlight.me.json
 
